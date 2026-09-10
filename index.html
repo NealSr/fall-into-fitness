@@ -17,7 +17,7 @@
     <div class="page-shell">
       <header class="site-header">
         <a class="brand" href="#checkin" aria-label="Fall Into Fitness home">
-          <span class="brand-mark" aria-hidden="true">↘</span>
+          <span class="brand-mark" aria-hidden="true"><span class="leaf-mark"></span></span>
           <span>Fall Into<br /><em>Fitness</em></span>
         </a>
         <nav class="main-nav" aria-label="Main navigation">
@@ -117,6 +117,14 @@
           <p class="privacy-note"><span>✦</span> One admin account. One shared source of truth for the challenge.</p>
         </section>
       </main>
+
+      <dialog class="success-dialog" id="participant-success">
+        <div class="success-icon" aria-hidden="true">✓</div>
+        <p class="eyebrow">Roster updated</p>
+        <h2><span id="success-person"></span> is in.</h2>
+        <p>The starting weight and first weigh-in were saved successfully.</p>
+        <button class="button button-primary" id="close-success" type="button">Done <span>→</span></button>
+      </dialog>
 
       <footer><span>FIF / 26</span><span>Built for the long way down</span></footer>
     </div>

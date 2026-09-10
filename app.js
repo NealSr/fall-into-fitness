@@ -83,7 +83,10 @@ document.querySelector('#join-form').addEventListener('submit', async (event) =>
   if (error) { showFeedback('#join-feedback', error.message, true); return; }
   const { error: checkinError } = await supabaseClient.from('checkins').insert({ participant_id: participant.id, weight: Number(form.get('weight')), time_of_day: form.get('timeOfDay') });
   if (checkinError) { showFeedback('#join-feedback', checkinError.message, true); return; }
+  const participantName = `${form.get('firstName')} ${form.get('lastName')}`;
   event.currentTarget.reset(); await refresh(); showFeedback('#join-feedback', 'Participant added to the roster.');
+  document.querySelector('#success-person').textContent = participantName;
+  document.querySelector('#participant-success').showModal();
 });
 
 document.querySelector('#checkin-form').addEventListener('submit', async (event) => {
@@ -94,6 +97,8 @@ document.querySelector('#checkin-form').addEventListener('submit', async (event)
   if (error) { showFeedback('#checkin-feedback', error.message, true); return; }
   event.currentTarget.reset(); await refresh(); showFeedback('#checkin-feedback', 'Weekly check-in saved.');
 });
+
+document.querySelector('#close-success').addEventListener('click', () => document.querySelector('#participant-success').close());
 
 document.querySelectorAll('[data-view-link]').forEach((link) => link.addEventListener('click', async () => {
   const target = link.dataset.viewLink;
