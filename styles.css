@@ -29,6 +29,7 @@ a { color: inherit; text-decoration: none; }
 .account-area { display: flex; align-items: center; gap: 13px; color: var(--muted); font: 10px "DM Mono", monospace; text-transform: uppercase; letter-spacing: .07em; }
 .text-button { padding: 0; border: 0; color: var(--terracotta); background: none; cursor: pointer; font: inherit; text-transform: uppercase; letter-spacing: .07em; }
 .auth-panel { display: grid; grid-template-columns: 1fr 1.4fr auto; gap: 25px; align-items: end; margin-top: 32px; padding: 22px 26px; background: #e7e5d8; border-left: 3px solid var(--gold); }
+.auth-panel[hidden] { display: none !important; }
 .auth-panel h2 { font-size: 21px; margin-bottom: 8px; }.auth-copy { color: var(--muted); font-size: 11px; line-height: 1.5; margin: 0; max-width: 420px; }
 .auth-form { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: end; }.auth-form .button { margin: 0; }.auth-form .text-button { grid-column: 1 / -1; justify-self: start; font-size: 10px; }.auth-panel.signed-in { grid-template-columns: 1fr; border-left-color: var(--sage); }.auth-panel.signed-in .auth-copy { max-width: 600px; }
 .auth-panel .form-feedback { margin: 0; }.form-feedback.error { color: var(--rust); }
