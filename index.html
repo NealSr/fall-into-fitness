@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4efe5" />
+    <title>Fall Into Fitness</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="#checkin" aria-label="Fall Into Fitness home">
+          <span class="brand-mark" aria-hidden="true">↘</span>
+          <span>Fall Into<br /><em>Fitness</em></span>
+        </a>
+        <nav class="main-nav" aria-label="Main navigation">
+          <a href="#checkin" data-view-link="checkin">Check-in</a>
+          <a href="#reports" data-view-link="reports">Reports</a>
+        </nav>
+        <div class="account-area"><span id="auth-state">Not signed in</span><button id="sign-out" class="text-button" type="button" hidden>Sign out</button></div>
+      </header>
+
+      <main>
+        <section class="auth-panel" id="auth-panel">
+          <div><p class="eyebrow">Your private key</p><h2 id="auth-title">Sign in to save your check-ins</h2><p class="auth-copy" id="auth-copy">Reports are public. Your participant record and weight history are only available to you.</p></div>
+          <form id="auth-form" class="auth-form">
+            <label>Email<input required name="email" type="email" autocomplete="email" placeholder="you@example.com" /></label>
+            <label>Password<input required name="password" type="password" minlength="6" autocomplete="current-password" placeholder="At least 6 characters" /></label>
+            <button class="button button-primary" type="submit" id="auth-submit">Sign in <span>↗</span></button>
+            <button class="text-button" type="button" id="auth-mode">Need an account? Sign up</button>
+          </form>
+          <p class="form-feedback" id="auth-feedback" role="status"></p>
+        </section>
+
+        <section class="view" data-view="checkin">
+          <div class="intro-grid">
+            <div class="intro-copy">
+              <p class="eyebrow">A little lighter, together</p>
+              <h1>Keep showing up.<br /><span>See it add up.</span></h1>
+              <p class="lede">A simple weekly record for the people making room for healthier habits this fall.</p>
+              <div class="season-stats">
+                <div><strong id="participant-count">0</strong><span>people in</span></div>
+                <div><strong id="checkin-count">0</strong><span>check-ins logged</span></div>
+                <div><strong id="group-loss">0%</strong><span>group progress</span></div>
+              </div>
+            </div>
+            <div class="sunset-art" aria-label="Autumn-inspired illustration" role="img">
+              <div class="sunset"></div>
+              <div class="hill hill-back"></div>
+              <div class="hill hill-front"></div>
+              <div class="tree tree-one"><i></i><b></b><strong></strong></div>
+              <div class="tree tree-two"><i></i><b></b><strong></strong></div>
+              <span class="art-caption">week by week</span>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <section class="panel join-panel">
+              <div class="panel-heading">
+                <div><p class="eyebrow">Start here</p><h2>Join the challenge</h2></div>
+                <span class="step-number">01</span>
+              </div>
+              <p class="panel-note">Your starting weigh-in is private to this device and sets your baseline.</p>
+              <form id="join-form" class="form-stack">
+                <div class="field-row">
+                  <label>First name<input required name="firstName" autocomplete="given-name" placeholder="Maya" /></label>
+                  <label>Last name<input required name="lastName" autocomplete="family-name" placeholder="Rivera" /></label>
+                </div>
+                <div class="field-row">
+                  <label>Starting weight<input required name="weight" type="number" min="1" max="999" step="0.1" placeholder="165" /></label>
+                  <label>Weigh-in time<select required name="timeOfDay"><option value="Morning">Morning</option><option value="Midday">Midday</option><option value="Evening">Evening</option></select></label>
+                </div>
+                <button class="button button-primary" type="submit">Add me to the roster <span>↗</span></button>
+              </form>
+              <p class="form-feedback" id="join-feedback" role="status"></p>
+            </section>
+
+            <section class="panel update-panel">
+              <div class="panel-heading">
+                <div><p class="eyebrow">Keep it moving</p><h2>Log a check-in</h2></div>
+                <span class="step-number">02</span>
+              </div>
+              <p class="panel-note">Use the same time of day each week for the clearest signal.</p>
+              <form id="checkin-form" class="form-stack">
+                <label>Participant<select required name="participant" id="participant-select"><option value="">Select your name</option></select></label>
+                <div class="field-row">
+                  <label>Current weight<input required name="weight" type="number" min="1" max="999" step="0.1" placeholder="160" /></label>
+                  <label>Weigh-in time<select required name="timeOfDay"><option value="Morning">Morning</option><option value="Midday">Midday</option><option value="Evening">Evening</option></select></label>
+                </div>
+                <button class="button button-secondary" type="submit">Save this week <span>→</span></button>
+              </form>
+              <p class="form-feedback" id="checkin-feedback" role="status"></p>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" data-view="reports" hidden>
+          <div class="reports-header">
+            <div><p class="eyebrow">The bigger picture</p><h1>Progress, <span>together.</span></h1></div>
+            <p class="lede">Every entry is a snapshot. The trend is the story.</p>
+          </div>
+          <div class="report-summary">
+            <div><span class="summary-label">Total participants</span><strong id="report-participant-count">0</strong></div>
+            <div><span class="summary-label">Average loss</span><strong id="average-loss">0%</strong></div>
+            <div><span class="summary-label">Latest check-in</span><strong id="latest-date">—</strong></div>
+          </div>
+          <div class="table-wrap">
+            <div class="table-top"><h2>Challenge roster</h2><span>Ranked by percentage lost</span></div>
+            <div id="report-table" class="report-list"></div>
+          </div>
+          <p class="privacy-note"><span>✦</span> Reports show progress only. Weight history stays with its owner.</p>
+        </section>
+      </main>
+
+      <footer><span>FIF / 26</span><span>Built for the long way down</span></footer>
+    </div>
+  </body>
+</html>
